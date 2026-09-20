@@ -1,0 +1,32 @@
+name: Daily Activity
+
+on:
+  schedule:
+    # Every 2 hours
+    - cron: "0 */2 * * *"
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  activity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Make activity commit
+        run: |
+          git config user.name "bshiyat"
+          git config user.email "199679027+bshiyat@users.noreply.github.com"
+          
+          DATE=$(date +"%Y-%m-%d")
+          TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+          
+          echo "$TIMESTAMP - Daily activity update" >> activity-log.md
+          
+          git add activity-log.md
+          git commit -m "chore: daily activity update for $DATE"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/bshiyat/github-achievements.git main
