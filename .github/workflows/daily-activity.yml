@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: master
 
       - name: Make activity commit
         run: |
@@ -29,4 +29,4 @@ jobs:
           
           git add activity-log.md
           git commit -m "chore: daily activity update for $DATE"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/bshiyat/github-achievements.git main
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/bshiyat/github-achievements.git master
